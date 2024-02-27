@@ -1,3 +1,5 @@
+//Daniel Dun seccion 1410112 C.I: 30.260.351
+
 #include <stdio.h>
  #include <stdlib.h>
  #include <windows.h>
@@ -5,7 +7,7 @@
  #include <direct.h>
  #include <time.h>
  #include <string.h>
- #include <fstream.h>
+ #include <iostream>
      
  //DECLARACION DE MÒDULOS
   void registrar();
@@ -24,18 +26,18 @@
    char Fcdes[9];  //Fecha de desincoporacion
  } PC;
 
- //DECLÄRACION DE ALIAS
-  FILE* archi;
+ //Declaracion de alias
+ FILE* archi;
  FILE* auxi;
  FILE* desin;
 
  //DECLÄRACION DE VARIABLES
- int Opc, Opcion1, Opcion2, Opcion3, op4,RE;
+ int Opc, Opcion1, Opcion2, Opcion3, op4,Re;
  char BBP[6];
 
  time_t tiempo=time(0);
  struct tm *tlocal=localtime(&tiempo);
- //PROGRAMA PRINCIPAL
+ //Programa Principal
  int main ( ){
  do{
      system("cls");
@@ -92,7 +94,8 @@
  void registrar() {
      system("cls");  
      system("COLOR B0");
-         
+     mkdir ("Inventario");
+     archi=fopen("archivoInventario.txt", "a+");    
    do{
      printf("\t\t\t\tREGISTRO DE DATOS DE UN EQUIPO\n\n\n\n");
      
@@ -118,13 +121,11 @@
      strcpy (PC.Femod, "00/00/00");
      strcpy (PC.Fcdes, "00/00/00");  
 
-     mkdir ("INVENTARIO");
-       archi=fopen ("archivoInventario.txt","a+") ;
         fprintf(archi,"%s %d %s %s %s %s %s\n",PC.NBP, PC.NEQ, PC.USEQ, PC.DPTO, PC.Fereg, PC.Femod, PC.Fcdes);
 
          printf("\n\n\t\t\t\t\tDATOS  GUARDADOS EXITOSAMENTE\n");
          printf("\n\n\t\t\t\tDESEA REGISTRAR OTRO EQUIPO? (1 PARA SI): ");
-         fflush(stdin);
+         //fflush(stdin);
          scanf("%d",&Opcion1);
        system("cls");  
      }while(Opcion1==1);
@@ -133,217 +134,194 @@
  }
 
  void consultar(){
-    int RE= 1, neq;
-  system("cls");
   system("COLOR B0");
-
+  system("cls");
+  printf("\n\n\nConsultar de Equipos\n\n");
+  archi=fopen("archivoInventario.txt", "r");
+  fflush(stdin);
+  scanf("%s", BBP);
+  Re=0;
+  int compa;
       do{
-        char CBP[6]
-          archi=fopen("archivoInventario.txt", "r");
-           printf("\n\n\nConsultar de Equipos\n\n");
-           printf("Ingrese Numero de bien publico:");
-           cin >> CBP;
-
-       do { int CBP;
-           fread(&PC, sizeof(PC), 1, archi);
-           CBP = strcmp (PC.NBP, CBP)
-           if(CBP == 0){ 
-            printf("\n\n\n ", PC.NBP, PC.NEQ, PC.USEQ, PC.DPTO, PC.Fereg, PC.Femod, PC.Fcdes);
-
-            RE=1
-            if(RE == 0 && eof(){
-              printf("\n\n\n\n\n\n\nRegistro no encontrado");
-            })
-           } 
-           }while (!eof());
-           
-            printf("\n\n\n\n\n\n\nDesea Hacer otra Busqueda? 1 para si")
-            char RRC;
-           } while (RRC == 1);
-
-           archi.close();
-           system ("pause");
-            return ;  
-       }
+        fscanf(archi ,"%s %d %s %s %s %s %s\n",PC.NBP,&PC.NEQ,PC.USEQ,PC.DPTO,PC.Fereg);
+  compa=strcmp(BBP,PC.NBP);
+    if(compa==0){
+        Re=1;
+        printf("\t\t\t Numero de Bien Publico: %s\n", PC.NBP);
+        printf("\t\t\t Numero del Equipo %s\n", PC.NEQ);
+        printf("\t\t\t Usuario %s\n", PC.USEQ);
+        printf("\t\t\t Departamento %s\n", PC.DPTO);
+        printf("\t\t\t Fecha de Registro %s\n", PC.Fereg);
+        printf("\t\t\t Fecha de Modificacion %s\n", PC.Femod);
+        printf("\t\t\t Fecha de Desincorporacion %s\n", PC.Fcdes);
+        printf("\t\n\n");
+        system("pause");
+    }
+     if(Re==0 && !feof(archi)){
+        printf("\n\n\t Registro No encontrado");
+        system("pause");
+     }
+      }while(Re==0 && !feof(archi));
+      fclose(archi);
+      return;
+ }                   
 
 void modificar(){
-  system("cls")
-
-  ofstream archi;
-  archi.open("archivoInventario.txt", ios::in);
-
-  auxi.open("auxiliar.txt", ios::app);
-
-  do{ char MDBP [6], int COMPA, RE;
-  cout << "Numero de Bien publico de datos que sea modificar"; 
-  cin >> MDBP;
-  do{
-    archi >> PC.NBP, PC.NEQ, PC.USEQ, PC.DPTO, PC.Fereg, PC.Femod, PC.Fcdes
-    COMPA = strcmp(PC.NBP, MDBP); // se comparan los elementos
-    if(COMPA == 0){
-      RE=1;
-
-    do{
-      printf("\n\n\n\n\t\tDatos modificables");
-      printf("\n\n\n 1 Marca");
-      printf("\n\n\n 2 Departamento");
-      printf("\n\n\n 3 Usuario");
-      printf("\n\n\n 4 Salir");
-      printf("\t\tElija dato a modificar");
-
-        cin >> Opcion3;
-          
-          switch (Opcion3);
-          {
-          case 1:
-          printf("\t\t\n\n Nueva Marca");
-          cin >> PC.MARCA;
-            break;
-
-          case 2: 
-          printf("\t\t\n\n Nuevo Departamento");
-          cin >> PC.DPTO;
-          break;
-
-          case 3:
-          printf("\t\t\n\n Nuevo Usuario"); 
-          cin >> PC.USEQ;
-            break;
-
-          case 4:
-          printf("\t\t\n\n Salir");
-          Sleep(600);
-          break;
-
-          default :  //
-               printf ("\t\t\t\t\n\n\nOpcion invalida!\n");
-               printf ("\t\t\t\t\n\n\n");
-               Sleep (600);
-               break;
-      } 
-      } while (Opcion3!= 4)   
-  }
-  if(RE == 0 && archi.eof()){
-    printf ("\t\t\t\t\n\n Registro no encontrado");
-  } system("pause");
-  
-  archi << PC.NBP, PC.NEQ, PC.USEQ, PC.DPTO, PC.Fereg, PC.Femod, PC.Fcdes; 
-  } while (!archi.eof());
-
-  printf("Usted desea modificar otra cosa? 1 para si")
-  char OM;
-
-  cin >> OM;
-
- }whie(OM == '1');
-
-  close(all)
-  archi.close();
-  auxi.close();
-
-  remove("archivoInventario.txt");
-  rename("auxiliar.txt");
-
-  return;
-
-}
-
-void desincorporar(){
   system("cls");
   system("COLOR B0");
-
-  ifstream DESIARCHI("DESINCORPOAR.TXT");
-  ifstream DESIAUXI("DESINCORPOAR.TXT");
-  ifstream DESIN("DESINCORPORAR.TXT");
-
-  DESIARCHI.open("archivoInventario.txt", ios::in);
-  DESIAUXI("auxiliar.txt", ios::app);
-  DESIN.open("DESINCORPORAR.TXT", ios::app;);
-
+  Re=0;
+  int compa;
+    
+ printf("\t\t\t\tMODIFICAR DATOS DE UN EQUIPO\n\n");
+ archi=fopen("archivoInventario.txt","r");
+ auxi=fopen("InventarioAux.txt","a+");
+ printf("Ingrese el numero de Bien Publico:");
+ fflush(stdin);
+ scanf("%s",BBP);
   do{
-    char DBP, RE=0;
-    printf("\n\n\n Ingrese el numero de Bien Publico del equipo a desincorporar");
-    cin >> DBP;
+ fscanf(archi,"%s %d %s %s %s %s %s\n",PC.NBP, &PC.NEQ, PC.USEQ, PC.DPTO, PC.Fereg);
+ compa=strcmp(BBP,PC.NBP);
+ if(compa==0){
+    Re=1;
+   do{
+ printf("\t\t\tDatos modificables:\n\n");
+ printf("\n\t\t1. Numero Del Equipo: %d",PC.NEQ);
+ printf("\n\t\t2. Nombre del usuario del Equipo : %s",PC.USEQ);
+ printf("\n\t\t3. Departamento: %s",PC.DPTO);
+ printf("\n\t\t4. Salir del modulo de modificacion de datos");
+ printf("\n\n\n\t\t\t\tOpcion:   ");
+ scanf("%d",&Opcion2);
+ switch  (Opcion2){
+ case 1:
+ printf("Nuevo Numero del Equipo:");
+ fflush(stdin);
+ scanf("%d",&PC.NEQ);
+ break;
+ case 2:
+ printf("Nuevo nombre de usuario del equipo:");
+ fflush(stdin);
+ gets(PC.USEQ);
+ break;
 
-    do{
-      int DESINCOMP;
-      DESIARCHI >> PC.NBP, PC.NEQ, PC.USEQ, PC.DPTO, PC.Fereg, PC.Femod, PC.Fcdes;
-
-      DESINCOMP = strcmp(PC.NBP, DBP);
-
-      if(DESINCOMP == 0){
-        RE=1
-
-        cout << "NBP:" << PC.NBP << endl;
-        cout << "\n\n MARCA:" << PC.MARCA << endl;
-        cout << "\n\n MODELO:" << PC.MODELO << endl;
-
-        do{
-          printf("\n\n Desea desincorporar este equipo?")
-          printf("\n\n\n\n\n 1 Para Desincorporar")
-          printf("\n\n\n\n\n 2 Para salir sin desincorporar")
-
-          cin >> op4;
-
-          switch (op4)
-          {
-          case 1:
-            strftime(PC.Fcdes, 9, "%d/%m/%y", tlocal);
-
-            desin << PC.NBP, PC.MARCA;
-            printf("\n\n Equipos Desincorporados");
-            system("pause");
-            break;
-
-          case 2:
-          DESIARCHI << PC.NBP,  PC.NEQ, PC.USEQ, PC.DPTO, PC.Fereg, PC.Femod, PC.Fcdes;
-          printf("\n\n\n Saliendo sin desincorporar");
-          system("pause");
-          break;
-          default:
-          printf("\n\n Opcion invalida")
-            break;
-          } 
-        } while(op4! && op4!=2);
-      }else {
-        DESIARCHI << PC.NBP, PC.NEQ, PC.USEQ, PC.DPTO, PC.Fereg, PC.Femod, PC.Fcdes;
+ fclose(archi);
+ fclose(auxi);
+ case 3:
+ fflush(stdin);
+ printf("\nNUEVO DEPARTAMENTO:");
+ gets(PC.DPTO);
+ break;
+ case 4:
+ strftime(PC.Femod,9,"%d/%m/%y",tlocal);
+ printf("Datos modificados correctamente!\n");
+ system ("pause");
+ break;
+ default :
+ printf("\n\n\t\tOpcion Invalida \n");
+ system ("pause");
+ break;
+ }
+ if(Re==0 && feof(archi)){
+ printf("\n\n\t\t\tRegistro de equipo no encontrado\n\n");
+ system ("pause");
       }
-    }while(!DESIARCHI.eof())
-    if (RE == 0 && DESIARCHI.eof());
-  {
-    printf("\n\n Ese Numero de Bien Publico no esta registrado");
-    char op5;
+    }while(Opcion2 != 4);
+ }
+ fprintf(auxi,"%s %d %s %s %s %s %s\n",PC.NBP, PC.NEQ, PC.USEQ, PC.DPTO, PC.Fereg);
+ }while(!feof(archi));
 
-    cout << "Desea repetir este modulo? 1 para si" << endl;
-    cin >> op5;
-  }
-  }while (op5 == '1')
-  DESIARCHI.close();
-  DESIAUXI.close();
-  desin.close();
-
+ fclose(archi);
+ fclose(auxi);
   remove("archivoInventario.txt");
-  rename("auxiliar.txt", "archivoInventario.txt");
-
+  rename("InventarioAux.txt","archivoInventario.txt");
   return;
-}
-
+ }
+  void desincorporar ()
+     
+{
+         
+system("cls");
+ system("COLOR 75");
+ printf("\t\t\t\tDesincorporacion de equipos\n\n");
+ archi=fopen("archivoInventario.txt","r");
+ auxi=fopen("InventarioAux.txt","a");
+ desin=fopen("InventarioDesi.txt","a");
+ fflush(stdin);
+ printf("\n\n\t\tIngrese el numero de Bien Publico:");
+ fflush(stdin);
+ scanf("%s",BBP);
+ Re=0;
+ int compa;
+ do{
+ fscanf(archi,"%s %d %s %s %s %s %s\n",PC.NBP, &PC.NEQ, PC.USEQ, PC.DPTO, PC.Fcdes);
+ compa=strcmp(BBP,PC.NBP);
+ if(compa==0){
+Re=1;    
+printf("\n\t\tNumero del Bien Publico: %s",PC.NBP);
+ printf("\n\t\tNumero del Equipo: %d",PC.NEQ);
+ printf("\n\t\tUSUARIO:  %s",PC.USEQ);
+ printf("\n\t\tDepartamento: %s",PC.DPTO);
+ printf("\n\t\tFecha de Registro: %s",PC.Fereg);
+ printf("\n\t\tFecha de modificacion del Registro: %s",PC.Femod);
+ printf("\n\t\tFECHA DE DESINCORP. DEL EQUIPO: %s",PC.Fcdes);
+ do{
+ printf("\n\n\t\t1.DESINCORPORAR ESTE EQUIPO?\n");
+ printf("\n\t\t2.SALIR SIN DESINCORPORAR\n");
+ printf ("\n\n\t\tOpcion: ");
+ scanf("%d",&Opcion3);
+ switch  (Opcion3) {
+ case  1:
+ printf("\n\n\t\tEQUIPO DESINCORPORADO!\n");
+ strftime (PC.Fcdes,9,"%d/%m/%y",tlocal);
+ fprintf(desin,"%s %d %s %s %s %s %s\n",PC.NBP, &PC.NEQ, PC.USEQ, PC.DPTO, PC.Fcdes);
+ compa=strcmp(BBP,PC.NBP);
+ system("pause");
+ break;
+ case  2:
+ fprintf(auxi,"%s %d %s %s %s %s %s\n",PC.NBP, &PC.NEQ, PC.USEQ, PC.DPTO, PC.Fcdes);
+ printf("\n\n\t\tREGISTRO NO ELIMINADO \n");
+ printf("\n\n\t\t");
+ system("pause");
+ break;
+ default :
+ printf("\n\n\t\t Opcion invalida!\n");
+ printf("\n\n\t\t");
+ system("pause");
+ break;
+ }
+ }while(Opcion3 !=1 && Opcion3 !=2) ;
+ }
+ else{
+ fprintf(auxi,"%s %d %s %s %s %s %s\n", PC.NBP, &PC.NEQ, PC.USEQ, PC.DPTO, PC.Fcdes);
+ }
+ }while (!feof (archi));
+ if (Re==0 && feof (archi))
+ {printf("\n\n\t\t\tREGISTRO DE EQUIPO NO ENCONTRADO\n\n" );
+ printf("\n\n\t\t");
+ system ("pause");}
+ fclose(archi);
+ fclose(auxi);
+ fclose(desin);
+ remove("archivoInventario.txt");
+ rename("InventarioAux.txt","archivoInventario.txt");
+ return;
+  }
+ 
 
 
 void lista(){
 
+  system("cls");    
   system("cls");
-   system("COLOR B0");
-  printf("Listado de equipos");
-
-  archi=fopen("archivoInventario.txt", "a+");
-
-  do{
-    prinf("%s%s%s%s%s%s \n", ,PC.NBP, PC.NEQ, PC.USEQ, PC.DPTO, PC.Fereg, PC.Femod, PC.Fcdes);
-  } 
-  while (!eof(archi));
-
-  fclose(archi);
+ printf("\n\n\t\t\t\tListado de Equipos\n\n");
+ archi=fopen("archivoInventario.txt","r");
+ printf("\n Numero de Bien Publico    Nro de Equipo   Usuario   Dpto");
+do{
+               
+fscanf(archi,"%s %d %s %s %s %s %s\n", PC.NBP, &PC.NEQ, PC.USEQ, PC.DPTO, PC.Fcdes);  
+printf("%s      %d      %s     %s     %s    %s  ");
+}while(!feof(archi));
+ system ("pause");
+ fclose(archi);
   system ("pause");
   return;
 
